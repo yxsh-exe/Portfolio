@@ -1,20 +1,29 @@
-
-import { Home, User, Folder, FileText, Mail, ExternalLink, Linkedin, Github, Youtube, Twitter } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Home, User, Folder, FileText, Mail, ExternalLink, Linkedin, Github, Twitter, X } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "@/components/theme-toggle";
+import { RainbowButton } from "@/components/ui/rainbow-button";
 
 interface SidebarItemProps {
-  icon: React.ElementType;
+  icon?: React.ElementType;
+  imageSrc?: string;
   label: string;
   href: string;
   isActive?: boolean;
   external?: boolean;
+  onNavigate?: () => void;
 }
 
-const SidebarItem = ({ icon: Icon, label, href, isActive, external }: SidebarItemProps) => {
+const SidebarItem = ({ icon: Icon, imageSrc, label, href, isActive, external, onNavigate }: SidebarItemProps) => {
+  const handleClick = () => {
+    if (onNavigate && !external) {
+      onNavigate();
+    }
+  };
+
   const LinkComponent = external ? 'a' : Link;
-  const linkProps = external ? { href, target: "_blank", rel: "noopener noreferrer" } : { to: href };
+  const linkProps = external 
+    ? { href, target: "_blank", rel: "noopener noreferrer", onClick: handleClick } 
+    : { to: href, onClick: handleClick };
   
   return (
     <LinkComponent
@@ -24,7 +33,11 @@ const SidebarItem = ({ icon: Icon, label, href, isActive, external }: SidebarIte
         isActive ? "bg-accent text-primary font-medium" : "text-foreground/70 hover:text-foreground"
       )}
     >
-      <Icon className="w-5 h-5" />
+      {imageSrc ? (
+        <img src={imageSrc} alt={label} className="w-6 h-6" />
+      ) : Icon && (
+        <Icon className="w-6 h-6" />
+      )}
       <span>{label}</span>
       {external && <ExternalLink className="w-3 h-3 ml-1 opacity-70" />}
     </LinkComponent>
@@ -34,35 +47,43 @@ const SidebarItem = ({ icon: Icon, label, href, isActive, external }: SidebarIte
 interface SidebarProps {
   className?: string;
   activePath: string;
+  onClose?: () => void;
 }
 
-export function Sidebar({ className, activePath }: SidebarProps) {
+export function Sidebar({ className, activePath, onClose }: SidebarProps) {
   const navigationItems = [
     { icon: Home, label: "Home", href: "/", path: "/" },
     { icon: User, label: "About", href: "/about", path: "/about" },
     { icon: Folder, label: "Projects", href: "/projects", path: "/projects" },
     { icon: FileText, label: "Articles", href: "/articles", path: "/articles" },
     { icon: Mail, label: "Contact", href: "/contact", path: "/contact" },
-  ];
+  ].filter(item => item.label !== "Articles");
 
   const socialItems = [
-    { icon: Twitter, label: "Twitter", href: "https://twitter.com", external: true },
-    { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com", external: true },
-    { icon: Github, label: "GitHub", href: "https://github.com", external: true },
-    { icon: Youtube, label: "YouTube", href: "https://youtube.com", external: true },
-  ];
+    { icon: Twitter, label: "Twitter", href: "https://x.com/dev_yash04?t=v5m3QNlyBNnCtq7dsoNaPw&s=09", external: true },
+    { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/yash-bansod-b61471268/", external: true },
+    { icon: Github, label: "GitHub", href: "https://github.com/yxsh-exe", external: true },
+  ].filter(item => item.label !== "YouTube");
+
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
 
   return (
-    <div className={cn("w-64 h-screen fixed flex flex-col border-r bg-background", className)}>
+    <div className={cn("h-screen flex flex-col border-r bg-background w-full", className)}>
       <div className="p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
-            <img src="/placeholder.svg" alt="Profile" className="w-full h-full object-cover" />
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-full overflow-hidden bg-gray-200">
+              <img src="/yash.jpg" alt="Profile" className="w-full h-full object-cover" />
+            </div>
+            <div className="font-medium">Yash Bansod</div>
           </div>
-          <div>
-            <h2 className="font-semibold text-lg leading-none">John Doe</h2>
-            <p className="text-muted-foreground text-sm">Developer</p>
-          </div>
+          
+          <button 
+            onClick={onClose}
+            className="p-1 rounded-md hover:bg-muted md:hidden"
+          >
+            <X size={20} />
+          </button>
         </div>
         
         <nav className="space-y-1">
@@ -73,6 +94,7 @@ export function Sidebar({ className, activePath }: SidebarProps) {
               label={item.label}
               href={item.href}
               isActive={item.path === activePath}
+              onNavigate={isMobile ? onClose : undefined}
             />
           ))}
         </nav>
@@ -94,12 +116,14 @@ export function Sidebar({ className, activePath }: SidebarProps) {
       </div>
       
       <div className="mt-auto p-4 border-t">
-        <a 
-          href="#" 
-          className="flex items-center justify-center gap-2 w-full p-2 rounded-md border bg-primary text-primary-foreground hover:bg-primary/90 transition-all"
+        <RainbowButton
+          onClick={() => {
+            window.open("/Yash Bansod.pdf", "_blank");
+          }}
+          className="w-full"
         >
-          Read Resume
-        </a>
+          Resume
+        </RainbowButton>
       </div>
     </div>
   );
