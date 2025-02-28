@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -84,11 +85,32 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				fadeIn: {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' }
+				},
+				slideIn: {
+					'0%': { transform: 'translateY(20px)', opacity: '0' },
+					'100%': { transform: 'translateY(0)', opacity: '1' }
+				},
+				wave: {
+					'0%': { transform: 'rotate(0deg)' },
+					'10%': { transform: 'rotate(14deg)' },
+					'20%': { transform: 'rotate(-8deg)' },
+					'30%': { transform: 'rotate(14deg)' },
+					'40%': { transform: 'rotate(-4deg)' },
+					'50%': { transform: 'rotate(10deg)' },
+					'60%': { transform: 'rotate(0deg)' },
+					'100%': { transform: 'rotate(0deg)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fadeIn 0.5s ease-in-out forwards',
+				'slide-in': 'slideIn 0.5s ease-out forwards',
+				'wave': 'wave 2.5s infinite'
 			}
 		}
 	},
