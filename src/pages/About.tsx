@@ -1,4 +1,14 @@
+import { FaJs, FaReact, FaNodeJs, FaDocker, FaGit } from 'react-icons/fa';
+import { SiTypescript, SiTailwindcss, SiMongodb, SiRedux, SiHtml5, SiCss3 } from 'react-icons/si';
+import { BiLogoGithub } from 'react-icons/bi';
+
+interface SkillProps {
+  size?: number;
+}
+
 const About = () => {
+  const skillSize = 40; // Define the default size here
+
   return (
     <div className="max-w-4xl mx-auto mt-8">
       <div className="glass-card p-6 rounded-lg shadow-md">
@@ -18,13 +28,24 @@ const About = () => {
           
           <div className="pt-6">
             <h2 className="text-2xl font-semibold mb-4">My Skills</h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 sm:grid-cols-3 gap-4">
               {[
-                "JavaScript", "TypeScript", "React", "Node.js", "TailwindCSS",
-                "MongoDB", "Docker", "Git"
-              ].map((skill) => (
-                <div key={skill} className="glass-card p-3 rounded-md text-center">
-                  {skill}
+                { name: "HTML", icon: <SiHtml5 size={skillSize} /> },
+                { name: "CSS", icon: <SiCss3 size={skillSize} /> },
+                { name: "JavaScript", icon: <FaJs size={skillSize} /> },
+                { name: "TypeScript", icon: <SiTypescript size={skillSize} /> },
+                { name: "React", icon: <FaReact size={skillSize} /> },
+                { name: "Node.js", icon: <FaNodeJs size={skillSize} /> },
+                { name: "TailwindCSS", icon: <SiTailwindcss size={skillSize} /> },
+                { name: "MongoDB", icon: <SiMongodb size={skillSize} /> },
+                { name: "Git", icon: <FaGit size={skillSize} /> },
+                { name: "GitHub", icon: <BiLogoGithub size={skillSize} /> },
+                { name: "Docker", icon: <FaDocker size={skillSize} /> },
+                { name: "Redux Toolkit", icon: <SiRedux size={skillSize} /> },
+              ].map(({ name, icon }) => (
+                <div key={name} className="glass-card p-3 rounded-md text-center border-none flex flex-col items-center justify-center">
+                  {icon}
+                  <span className="block text-sm font-bold text-center mt-2">{name}</span>
                 </div>
               ))}
             </div>

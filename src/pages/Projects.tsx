@@ -39,7 +39,7 @@ const Projects = () => {
   return (
     <section>
       <div className="max-w-4xl mx-auto py-16 px-4">
-        <div className="pt-8 opacity-0 animate-fade-in animate-delay-300">
+        <div className="pt-2 opacity-0 animate-fade-in animate-delay-300">
           <h2 className="text-2xl font-semibold mb-6 text-gray-900 dark:text-white">What I've been working on</h2>
           
           {loading && (
@@ -57,7 +57,7 @@ const Projects = () => {
           
             {!loading && !error && (
      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">    
-               {repos.slice(0, 2).map((repo, index) => (
+               {repos.slice(0, 20).map((repo, index) => (
                 <a 
                   key={repo.id} 
                   href={repo.html_url}

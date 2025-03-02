@@ -113,8 +113,8 @@ export function Layout({ children }: LayoutProps) {
           squareSize={5}
           gridGap={5}
           color="#6B7280"
-          maxOpacity={0.4}
-          flickerChance={0.1}
+          maxOpacity={0.5}
+          flickerChance={0.8}
         />
         <main className="relative z-10 p-4">
           {children}

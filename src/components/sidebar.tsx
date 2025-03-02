@@ -1,7 +1,7 @@
-import { Home, User, Folder, FileText, Mail, ExternalLink, Linkedin, Github, Twitter, X } from "lucide-react";
+import { Home, User, Folder, FileText, Mail, ExternalLink, Linkedin, Github, Twitter, X, ArrowRight } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
-import { RainbowButton } from "@/components/ui/rainbow-button";
+import { Button } from "@/components/ui/button";
 
 interface SidebarItemProps {
   icon?: React.ElementType;
@@ -116,14 +116,15 @@ export function Sidebar({ className, activePath, onClose }: SidebarProps) {
       </div>
       
       <div className="mt-auto p-4 border-t">
-        <RainbowButton
+        <Button
           onClick={() => {
             window.open("/Yash Bansod.pdf", "_blank");
           }}
-          className="w-full"
+          className="w-full bg-white text-black hover:bg-gray-100 transition-all transform hover:scale-105 duration-200"
         >
           Resume
-        </RainbowButton>
+          <ArrowRight className="ml-2 h-4 w-4" />
+        </Button>
       </div>
     </div>
   );
